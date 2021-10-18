@@ -5,7 +5,6 @@
 #include <fcntl.h>
 #include <stddef.h>
 #include <stdbool.h>
-#include <termios.h>
 
 void help() {
     printf(" USAGE: more [name_of_file]\n");
@@ -64,20 +63,9 @@ int get_line(int fd) {
 void implement_wait_for_input() {
     fflush(stdin);
     fflush(stdout);
-    printf("\n\n\e[7m--More--");
-    struct termios old, new;
-
-    /* Turn echoing off and fail if we can't. */
-    if (tcgetattr (fileno (stdin), &old) != 0)
-        exit(-1);
-    new = old;
-    new.c_lflag &= ~ECHO;
-    if (tcsetattr (fileno (stdin), TCSAFLUSH, &new) != 0)
-        exit(-1);
-    char ch = getchar();
-    (void) tcsetattr (fileno (stdin), TCSAFLUSH, &old);
-    printf("\b\b\r");
-    printf("\e[0m");
+    printf("\n\n\e[7m--More--\e[0m");
+    char trash_char;
+    scanf("%c", &trash_char);
     fflush(stdin);
     fflush(stdout);
 }

@@ -6,9 +6,9 @@ void help() {
     printf(" USAGE: copy [name_of_source] [name_of_destination]\n");
 }
 
-int main(int argc, char argv[]) {
+int main(int argc, char * argv[]) {
     int r_val = 0;
-    if ( argc == 3 ) {
+    if ( argc != 3 ) {
         help();
         exit(EXIT_FAILURE);
     }
